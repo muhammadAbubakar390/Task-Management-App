@@ -1,0 +1,35 @@
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+
+export function middleware(request: NextRequest) {
+  // Check both cookies and localStorage simulation
+  const cookieToken = request.cookies.get("token")?.value;
+  const accessToken = request.cookies.get("accessToken")?.value;
+  
+  // Also check for auth header (for API calls)
+  const authHeader = request.headers.get("authorization");
+  
+  const isAuthPage =
+    request.nextUrl.pathname.startsWith("/login") ||
+    request.nextUrl.pathname.startsWith("/signup");
+
+  const isDashboard = request.nextUrl.pathname.startsWith("/dashboard");
+
+  // If not logged in & trying to access dashboard
+  if (!cookieToken && !accessToken && !authHeader && isDashboard) {
+    console.log("Middleware: No token found, redirecting to login");
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  // If logged in & trying to access auth pages
+  if ((cookieToken || accessToken || authHeader) && isAuthPage) {
+    console.log("Middleware: Already logged in, redirecting to dashboard");
+    return NextResponse.redirect(new URL("/dashboard", request.url)); // Changed from /dashboard/tasks
+  }
+
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: ["/dashboard/:path*", "/login", "/signup"],
+};

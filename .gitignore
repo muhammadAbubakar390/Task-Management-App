@@ -16,16 +16,51 @@ build/
 dist/
 out/
 
-# Misc
-.DS_Store
-*.pem
+# Logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Runtime data
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory
+coverage/
+.nyc_output/
+
+# Misc
+.DS_Store
+*.pem
+
 # IDE
 .vscode/
 .idea/
+*.swp
+*.swo
 
-# Git folders (except root)
-*/.git/
+# OS
+Thumbs.db
+
+# Test files
+*.test.js
+*.spec.js
+__tests__/
+
+# Old duplicate projects
+task-app-frontend/
+task-app-backend/
+task-app-frontend-old/
+task-app-backend-old/
+assessment-app/
+
+# Backup folders
+old-backups-*/
+backup-*/
+
+# Debug files
+debug-*
+test-*
+simple-*
